@@ -2,13 +2,20 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-# Create your models here.
+class ThumbnailSize(models.Model):
+    size = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.size}px'
+
+
+class UserTier(models.Model):
+    name = models.CharField(max_length=32)
+    allowed_thumbnail_size = models.ManyToManyField(ThumbnailSize)
+
+    def __str__(self):
+        return self.name
+
 
 class User(AbstractUser):
-    BASIC = "BA"
-    PREMIUM = "PR"
-    ENTERPRISE = "EN"
-    TIER_CHOICES = [(BASIC, "Basic"),
-                    (PREMIUM, "Premium"),
-                    (ENTERPRISE, "Enterprise")]
-    tier = models.CharField(max_length=16, choices=TIER_CHOICES)
+    tier = models.ForeignKey(UserTier, on_delete=models.CASCADE, null=True)

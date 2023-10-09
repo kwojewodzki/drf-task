@@ -1,9 +1,25 @@
 from django.contrib.auth import get_user_model
-from .models import User
+from .models import User, ThumbnailSize, UserTier
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
+
+
+class ThumbnailSizeTest(TestCase):
+    def test_create_thumbnail_size(self):
+        thumbnail_size = ThumbnailSize.objects.create(size=200)
+        self.assertEquals(thumbnail_size.size, 200)
+
+
+class UserTierTest(TestCase):
+    def setUp(self):
+        self.user_tier = UserTier.objects.create(name='TestTier')
+        self.user_tier.allowed_thumbnail_size.create(size=200)
+
+    def test_create_user_tier(self):
+        self.assertEquals(self.user_tier.name, 'TestTier')
+        self.assertEquals(self.user_tier.allowed_thumbnail_size.first().size, 200)
 
 
 class UserTest(TestCase):

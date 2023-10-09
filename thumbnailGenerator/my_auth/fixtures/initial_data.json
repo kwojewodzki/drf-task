@@ -1,0 +1,48 @@
+[
+  {
+    "model": "my_auth.thumbnailsize",
+    "pk": 1,
+    "fields": {
+      "size": 200
+    }
+  },
+  {
+    "model": "my_auth.thumbnailsize",
+    "pk": 2,
+    "fields": {
+      "size": 400
+    }
+  },
+  {
+    "model": "my_auth.usertier",
+    "pk": 1,
+    "fields": {
+      "name": "Enterprise",
+      "allowed_thumbnail_size": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "model": "my_auth.usertier",
+    "pk": 2,
+    "fields": {
+      "name": "Basic",
+      "allowed_thumbnail_size": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "my_auth.usertier",
+    "pk": 3,
+    "fields": {
+      "name": "Premium",
+      "allowed_thumbnail_size": [
+        1,
+        2
+      ]
+    }
+  }
+]
