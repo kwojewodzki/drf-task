@@ -21,6 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-b!qiwc5$n5d*3qz)e&o7n%!o%!p^rjkyx*fu64n*ra^5#!*kmf'
 
+AUTH_USER_MODEL = 'my_auth.User'
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -38,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     # my apps
-    'auth'
+    'my_auth'
 ]
 
 MIDDLEWARE = [
@@ -128,3 +131,4 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
+
