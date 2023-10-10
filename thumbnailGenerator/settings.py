@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'imagekit',
     # my apps
     'my_auth',
     'thumbnail_api'
