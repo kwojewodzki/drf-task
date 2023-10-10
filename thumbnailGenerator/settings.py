@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +23,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-b!qiwc5$n5d*3qz)e&o7n%!o%!p^rjkyx*fu64n*ra^5#!*kmf'
 
 AUTH_USER_MODEL = 'my_auth.User'
-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,8 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'imagekit',
     # my apps
-    'my_auth'
+    'my_auth',
+    'thumbnail_api'
 ]
 
 MIDDLEWARE = [
@@ -132,3 +134,7 @@ REST_FRAMEWORK = {
     ],
 }
 
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'mediafiles')
+
+# URL used to access the media
+MEDIA_URL = '/media/'
