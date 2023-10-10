@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from .models import Image
+from rest_framework.exceptions import ValidationError
+
+from .models import Image, ExpiringLink
 from .utils import convert_to_thumbnails
 
 
@@ -24,3 +26,11 @@ class ImageListSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         return obj.get_links(request)
 
+
+class ExpiringLinkCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExpiringLink
+        fields = [
+            'image',
+            'time_to_expire'
+        ]

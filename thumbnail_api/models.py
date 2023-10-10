@@ -1,6 +1,7 @@
 import time
 from pathlib import Path
 
+import uuid
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.db import models
@@ -43,6 +44,11 @@ class Image(models.Model):
 
 
 class ExpiringLink(models.Model):
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     image = models.OneToOneField(Image, on_delete=models.CASCADE)
     link = models.CharField(max_length=256)
     time_to_expire = models.IntegerField(validators=[validate_time_to_expire])

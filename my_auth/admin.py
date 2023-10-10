@@ -43,8 +43,7 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {'fields': ('email', 'password1', 'password2')}),
         ('Username', {'fields': ('username',)}),
-        ('Permissions', {'fields': ('is_staff',)}),
-        ('Account Tier', {'fields': ('account_tier',)}),
+        ('User Tier', {'fields': ('tier',)}),
     )
 
 

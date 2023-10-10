@@ -7,17 +7,17 @@ from rest_framework.exceptions import NotFound
 
 
 class ExpiringLinkMixin:
-    def generate_expiring_link(self, image, time_to_expired):
+    def generate_expiring_link(self, image, time_to_expire):
         """Generates expiring link from uploaded image."""
-        pk = uuid.uuid4()
+        pk = uuid.uuid1()
         signed_link = signing.dumps(str(pk))
 
-        full_url = self.request.build_absolute_uri(reverse('expiring_link_detail', kwargs={'signed_link': signed_link}))
+        full_url = self.request.build_absolute_uri(reverse('expiring_link', kwargs={'signed_link': signed_link}))
 
         current_time = int(time.time())
-        expiry_time = current_time + int(time_to_expired)
+        expiry_time = current_time + int(time_to_expire)
 
-        ExpiringLink.objects.create(id=pk, link=full_url, image=image, time_to_expired=expiry_time)
+        ExpiringLink.objects.create(id=pk, link=full_url, image=image, time_to_expire=expiry_time)
 
         return {'link': full_url}
 
