@@ -1,7 +1,5 @@
-from imagekit.cachefiles import ImageCacheFile
 from rest_framework import serializers
 from .models import Image
-from .utils import Thumbnail
 
 
 class ImageSerializer(serializers.ModelSerializer):
