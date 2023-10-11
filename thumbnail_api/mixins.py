@@ -23,7 +23,6 @@ class ExpiringLinkMixin:
 
     @staticmethod
     def decode_signed_value(value):
-        """Decodes signed link."""
         try:
             return signing.loads(value)
         except signing.BadSignature:

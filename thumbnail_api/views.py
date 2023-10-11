@@ -44,6 +44,7 @@ class CreateExpiringLinkAPIView(generics.CreateAPIView, ExpiringLinkMixin):
         time_to_expire = self.request.data.get('time_to_expire')
         self.link = self.generate_expiring_link(serializer.validated_data['image'], time_to_expire)
 
+
 class ExpiringLinkDetailAPIView(generics.RetrieveAPIView, ExpiringLinkMixin):
     queryset = ExpiringLink.objects.all()
     permission_classes = [CanGetExpiringLink]
@@ -65,5 +66,6 @@ class ExpiringLinkDetailAPIView(generics.RetrieveAPIView, ExpiringLinkMixin):
     def retrieve(self, request, *args, **kwargs):
         image = self.get_object().image_url
         content_type, encoding = mimetypes.guess_type(image.name)
-        response = FileResponse(image, content_type=content_type, as_attachment=False, filename=image.name.split('/')[-1])
+        response = FileResponse(image, content_type=content_type, as_attachment=False,
+                                filename=image.name.split('/')[-1])
         return response

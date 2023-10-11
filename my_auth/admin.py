@@ -1,9 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .forms import CustomUserChangeForm
-from .models import CustomUser, ThumbnailSize, UserTier
-
+from .models import CustomUser, UserTier
 
 # Register your models here.
 
@@ -35,8 +33,8 @@ class CustomUserAdmin(UserAdmin):
                 'is_active',
                 'is_superuser',
                 'user_permissions')
-                }
-        ),
+        }
+         ),
         ('Additional stats', {'fields': ('last_login', 'date_joined')}),
     )
 

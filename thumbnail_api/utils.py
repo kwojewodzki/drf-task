@@ -6,7 +6,6 @@ from .models import Image
 
 
 def convert_to_thumbnails(pk):
-    """Converts uploaded image to thumbnails according to user's account tier."""
     instance = Image.objects.get(id=pk)
 
     user_tier = instance.owner.tier
