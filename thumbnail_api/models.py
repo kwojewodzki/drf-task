@@ -12,10 +12,15 @@ from thumbnail_api.validators import validate_time_to_expire
 
 
 def upload_to(instance, filename):
-    return f'images/{filename}'.format(filename=filename)
+    return f"{instance.owner.id}/images/{instance.id}/{filename}"
 
 
 class Image(models.Model):
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     image_url = models.ImageField(upload_to=upload_to, blank=True, null=True)
 
@@ -25,9 +30,9 @@ class Image(models.Model):
     def get_links(self, request):
         user_tier = self.owner.tier
         base_file = os.path.dirname(self.image_url.name)
+        print(base_file)
         thumbnails = default_storage.listdir(base_file)[1]
         base_url = request.build_absolute_uri('/')
-
         thumbs_for_user = []
         for thumbnail in thumbnails:
             if 'thumb' in thumbnail:

@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'thumbnailGenerator.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'images',
         'USER': 'kwojewodzki',
         'PASSWORD': 'password',
@@ -136,7 +136,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'mediafiles')
-
 # URL used to access the media
 MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

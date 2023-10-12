@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import CustomUser, UserTier
+from .models import CustomUser, UserTier, ThumbnailSize
+
+admin.site.register(ThumbnailSize)
 
 # Register your models here.
 

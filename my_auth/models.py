@@ -25,3 +25,4 @@ class UserTier(models.Model):
 
 class CustomUser(AbstractUser):
     tier = models.ForeignKey(UserTier, on_delete=models.CASCADE, null=True)
+

@@ -1,64 +1,53 @@
-from django.contrib.auth import get_user_model
-from .models import CustomUser, ThumbnailSize, UserTier
+from my_auth.models import CustomUser, ThumbnailSize, UserTier
 from django.test import TestCase
 from rest_framework import status
-from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 
 
 class ThumbnailSizeTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.thumbnail = ThumbnailSize.objects.create(id=15, size=250)
+
     def test_create_thumbnail_size(self):
-        thumbnail_size = ThumbnailSize.objects.create(size=200)
-        self.assertEquals(thumbnail_size.size, 200)
+        self.assertEquals(self.thumbnail.size, 250)
 
 
 class UserTierTest(TestCase):
     def setUp(self):
-        self.user_tier = UserTier.objects.create(name='TestTier')
-        self.user_tier.allowed_thumbnail_size.create(size=200)
+        self.user_tier = UserTier.objects.create(id=15, name='TestTier', is_original_file=True, is_expiring_link=False)
+        self.user_tier.allowed_thumbnail_size.create(id=15, size=250)
 
     def test_create_user_tier(self):
         self.assertEquals(self.user_tier.name, 'TestTier')
-        self.assertEquals(self.user_tier.allowed_thumbnail_size.first().size, 200)
+        self.assertEquals(self.user_tier.allowed_thumbnail_size.first().size, 250)
+
+    def test_is_expiring_link(self):
+        self.assertFalse(self.user_tier.is_expiring_link)
+
+    def test_is_original_file(self):
+        self.assertTrue(self.user_tier.is_original_file)
 
 
 class UserTest(TestCase):
+    def setUp(self):
+        self.user_tier = UserTier.objects.filter(name="Basic").get()
+        self.user = CustomUser.objects.create_user(id=15, username='username', password='Pas@w0rd', tier=self.user_tier)
 
     def test_create_basic_user(self):
-        user = CustomUser.objects.create_user(username='username', password='Pas@w0rd', tier='BA')
         data = {
             'username': 'username',
             'password': 'Pas@w0rd',
-            'tier': 'BA'
         }
-        self.assertEquals(user.username, data['username'])
-        self.assertEquals(user.tier, data['tier'])
-        self.assertTrue(user.is_active)
-        self.assertFalse(user.is_staff)
+        self.assertEquals(self.user.username, data['username'])
+        self.assertTrue(self.user.is_active)
+        self.assertFalse(self.user.is_staff)
 
-    def test_create_premium_user(self):
-        user = CustomUser.objects.create_user(username='username', password='Pas@w0rd', tier='PR')
-        data = {
-            'username': 'username',
-            'password': 'Pas@w0rd',
-            'tier': 'PR'
-        }
-        self.assertEquals(user.username, data['username'])
-        self.assertEquals(user.tier, data['tier'])
-        self.assertTrue(user.is_active)
-        self.assertFalse(user.is_staff)
+    def test_is_expiring_link(self):
+        self.assertFalse(self.user.tier.is_expiring_link)
 
-    def test_create_enterprise_user(self):
-        user = CustomUser.objects.create_user(username='username', password='Pas@w0rd', tier='EN')
-        data = {
-            'username': 'username',
-            'password': 'Pas@w0rd',
-            'tier': 'EN'
-        }
-        self.assertEquals(user.username, data['username'])
-        self.assertEquals(user.tier, data['tier'])
-        self.assertTrue(user.is_active)
-        self.assertFalse(user.is_staff)
+    def test_is_original_link(self):
+        self.assertFalse(self.user.tier.is_original_file)
 
 
 class LoginUserViewTest(APITestCase):
@@ -71,5 +60,5 @@ class LoginUserViewTest(APITestCase):
             'username': 'username',
             'password': 'Pas@w0rd'
         }
-        response = self.client.post('/login/', data)
+        response = self.client.post('/auth/login/', data)
         self.assertEquals(response.status_code, status.HTTP_202_ACCEPTED)
