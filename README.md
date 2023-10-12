@@ -13,7 +13,7 @@ To set up this image storage API, follow these steps:
 2. Apply database migrations inside the Docker container:
 
    ```shell
-   docker-compose exec web bash
+   docker-compose exec -it web bash
    python manage.py migrate
    ```
 
