@@ -1,8 +1,6 @@
 from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
 
-from .models import Image, ExpiringLink
-from .utils import convert_to_thumbnails
+from thumbnail_api.models import Image, ExpiringLink
 
 
 class ImageCreateSerializer(serializers.ModelSerializer):

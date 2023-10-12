@@ -2,7 +2,7 @@ import uuid
 from django.core import signing
 from django.urls import reverse
 import time
-from .models import ExpiringLink
+from thumbnail_api.models import ExpiringLink
 from rest_framework.exceptions import NotFound
 
 

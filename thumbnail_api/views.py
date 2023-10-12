@@ -15,7 +15,6 @@ class ListImagesView(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        print(user.tier.get_thumbnail_size())
         return Image.objects.filter(owner=user)
 
 
@@ -24,7 +23,6 @@ class UploadImageView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         obj = serializer.save(owner=self.request.user)
-        print(obj.id)
         convert_to_thumbnails(obj.id)
 
 

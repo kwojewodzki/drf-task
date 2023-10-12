@@ -30,7 +30,6 @@ class Image(models.Model):
     def get_links(self, request):
         user_tier = self.owner.tier
         base_file = os.path.dirname(self.image_url.name)
-        print(base_file)
         thumbnails = default_storage.listdir(base_file)[1]
         base_url = request.build_absolute_uri('/')
         thumbs_for_user = []
