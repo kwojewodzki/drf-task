@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-b!qiwc5$n5d*3qz)e&o7n%!o%!p^rjkyx*fu64n*ra^5#!*kmf'
 
-AUTH_USER_MODEL = 'my_auth.User'
+AUTH_USER_MODEL = 'my_auth.CustomUser'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'imagekit',
     # my apps
     'my_auth',
     'thumbnail_api'
@@ -81,11 +80,14 @@ WSGI_APPLICATION = 'thumbnailGenerator.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'images',
+        'USER': 'kwojewodzki',
+        'PASSWORD': 'password',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -134,7 +136,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'mediafiles')
-
 # URL used to access the media
 MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

@@ -18,6 +18,8 @@
     "pk": 1,
     "fields": {
       "name": "Enterprise",
+      "is_expiring_link": true,
+      "is_original_file": true,
       "allowed_thumbnail_size": [
         1,
         2
@@ -29,6 +31,8 @@
     "pk": 2,
     "fields": {
       "name": "Basic",
+      "is_expiring_link": false,
+      "is_original_file": false,
       "allowed_thumbnail_size": [
         1
       ]
@@ -39,6 +43,8 @@
     "pk": 3,
     "fields": {
       "name": "Premium",
+      "is_expiring_link": false,
+      "is_original_file": true,
       "allowed_thumbnail_size": [
         1,
         2

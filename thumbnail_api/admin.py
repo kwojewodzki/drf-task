@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Image
+
+from thumbnail_api.models import Image
 
 # Register your models here.
 

@@ -1,35 +1,34 @@
 from rest_framework import serializers
-from .models import Image
+
+from thumbnail_api.models import Image, ExpiringLink
 
 
-class ImageSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
-    image_url = serializers.ImageField(required=False)
+class ImageCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = [
+            'image_url'
+        ]
+
+
+class ImageListSerializer(serializers.ModelSerializer):
+    images = serializers.SerializerMethodField()
 
     class Meta:
         model = Image
-        fields = ['id', 'owner', 'image_url']
+        fields = [
+            'images'
+        ]
+
+    def get_images(self, obj):
+        request = self.context.get('request')
+        return obj.get_links(request)
 
 
-class GetThumbnail200Serializer(serializers.ModelSerializer):
-    image_200 = serializers.ImageField()
-
+class ExpiringLinkCreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Image
-        fields = ['image_200']
-
-
-class GetThumbnail400Serializer(serializers.ModelSerializer):
-    image_400 = serializers.ImageField()
-
-    class Meta:
-        model = Image
-        fields = ['image_400']
-
-
-class GetOriginalImage(serializers.ModelSerializer):
-    image_url = serializers.ImageField()
-
-    class Meta:
-        model = Image
-        fields = ['image_url']
+        model = ExpiringLink
+        fields = [
+            'image',
+            'time_to_expire'
+        ]
