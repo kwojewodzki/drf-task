@@ -5,9 +5,9 @@ from rest_framework.test import APITestCase
 
 
 class ThumbnailSizeTest(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.thumbnail = ThumbnailSize.objects.create(id=15, size=250)
+
+    def setUp(self):
+        self.thumbnail = ThumbnailSize.objects.create(id=15, size=250)
 
     def test_create_thumbnail_size(self):
         self.assertEquals(self.thumbnail.size, 250)
